@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+.main * {
+  background-color: #DAEDBD;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+}
+
+.newTask {
+  display: flex;
+  padding: 1rem;
+}
+
+.parentTask {
+  display: flex;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.parentTask span {
+  flex: 1;
+}
+
+.newTask input {
+  flex: 1;
+}
+
+.main input {
+  border-radius: 1rem;
+  background-color: white;
+  padding: .25rem 1rem;
+  margin-right: .5rem;
+}
+
+.main button {
+  background-color: white;
+  border-radius: 1rem;
+  width: 5rem;
+}

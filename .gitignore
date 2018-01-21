@@ -1,0 +1,9 @@
+*.swp
+node_modules
+**/node_modules
+.DS_Store
+web/public/js
+web/public/css
+!web/public/css/font-awesome.min.css
+web/coverage
+npm-debug.log

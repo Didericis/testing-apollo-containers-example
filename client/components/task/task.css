@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+.task {
+  border-radius: 2rem;
+  border: 1px solid white;
+  font-size: .65rem;
+  font-family: 'Lato', sans-serif;
+  padding: 1rem;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+}
+
+.task button {
+  cursor: pointer;
+}
+
+.task h1 {
+  flex: 1;
+}
+
+.subtasks {
+  padding-left: 2rem;
+  margin-top: .5rem;
+}
+
+.selected {
+  background-color: #7DBBC3;
+}
+
+.main h1 {
+  margin: 0;
+}

@@ -1,0 +1,7 @@
+.main {
+  background-color: #E5B181;
+}
+
+.task + .task {
+  margin-top: .5rem;
+}

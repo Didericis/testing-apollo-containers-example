@@ -5,6 +5,8 @@ const graphqlHTTP = require('express-graphql');
 const _ = require('lodash');
 
 const typeDefs = `
+  # --- Main Types ---
+
   type Task {
     id: ID!
     name: String!
@@ -12,35 +14,49 @@ const typeDefs = `
     tasks: [Task]
   }
 
-  input TaskQueryInput {
-    id: String
-  }
-
-  type Query {
-    task(input: TaskQueryInput!): Task,
-    tasks: [Task],
-  }
+  # --- Main Inputs ---
 
   input TaskInput {
     name: String!
     parentId: String
   }
 
-  input CreateTaskMutationInput {
-    task: TaskInput!
+  # --- Query Inputs ---
+
+  input TaskQueryInput {
+    id: String
   }
 
-  type CreateTaskMutationPayload {
-    task: Task
+  # --- Query Payloads ---
+
+  # --- Query Extension ---
+
+  type Query {
+    task(input: TaskQueryInput!): Task,
+    tasks: [Task],
+  }
+
+  # --- Mutation Inputs ---
+
+  input CreateTaskMutationInput {
+    task: TaskInput!
   }
 
   input RemoveTaskMutationInput {
     id: String
   }
 
+  # --- Mutation Payloads ---
+
+  type CreateTaskMutationPayload {
+    task: Task
+  }
+
   type RemoveTaskMutationPayload {
     success: Boolean
   }
+
+  # --- Extend Mutation ---
 
   type Mutation {
     createTask(input: CreateTaskMutationInput!): CreateTaskMutationPayload

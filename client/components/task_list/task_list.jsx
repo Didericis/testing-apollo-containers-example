@@ -13,7 +13,7 @@ export default class TaskList extends Component {
     const { className, tasks } = this.props;
     return (
       <div className={classNames(styles.main, className)}>
-        {tasks.map(task => <Task key={task.id} taskId={task.id} className={styles.task}/>)} 
+        {tasks.map(task => <Task key={task.id} task={task} className={styles.task}/>)} 
       </div>
     );
   }

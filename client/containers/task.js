@@ -4,37 +4,32 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import _ from 'lodash';
 
-import Task from 'components/task';
 import * as TaskActions from 'dux/tasks';
-import { TaskListQuery } from 'containers/task_list';
+import Task from 'components/task';
+import TasksQuery from 'queries/task_list/tasks.graphql';
+import TaskQuery from 'queries/task/task.graphql'; 
+import RemoveTaskMutation from 'mutations/task/remove_task.graphql';
 
 // adds the 'selected' prop
 const withSelected = connect(
-  ({ tasks: { parentId } }, { taskId }) => ({ selected: taskId === parentId }),
+  ({ tasks: { parentId } }, { task }) => ({ selected: task.id === parentId }),
 );
-
-export const TaskQuery = gql`
-query TaskQuery($input: TaskQueryInput!) {
-  task(input: $input) { id name parentId tasks { id } }
-}`;
 
 // adds the 'task' prop 
 const withTask = graphql(
   TaskQuery,
   { 
-    options: ({ taskId }) => ({
-      variables: { input: { id: taskId }}, 
+    options: ({ task: { id } }) => ({
+      variables: { input: { id }}, 
     }),
-    props: ({ data }) => ({ task: data.task })
+    props: ({ data, ownProps }) => ({ 
+      task: {
+        ...ownProps.task,
+        ...data.task,
+      }
+    })
   }
 );
-
-export const RemoveTaskMutation = gql`
-mutation removeTask($input: RemoveTaskMutationInput!) {
-  removeTask(input: $input) {
-    success
-  }
-}`;
 
 // adds the 'onClickRemove' prop
 const withOnClickRemove = compose(
@@ -45,13 +40,13 @@ const withOnClickRemove = compose(
   graphql(
     RemoveTaskMutation,
     { 
-      props: ({ mutate, ownProps: { taskId, clearParentId } }) => ({ 
+      props: ({ mutate, ownProps: { task, clearParentId } }) => ({ 
         onClickRemove: ({ parentId }) => mutate({
           refetchQueries: [
-            { query: TaskListQuery },
+            { query: TasksQuery },
             { query: TaskQuery, variables: { input: { id: parentId } } }
           ],
-          variables: { input: { id: taskId }}, 
+          variables: { input: { id: task.id }}, 
         }).then(clearParentId)
       })
     }
@@ -77,3 +72,4 @@ export const container = compose(
 );
 
 export default container(Task);
+

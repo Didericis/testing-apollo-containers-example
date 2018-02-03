@@ -19,6 +19,7 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'client/components'),
       containers: path.resolve(__dirname, 'client/containers'),
+      factories: path.resolve(__dirname, 'factories'),
       redux_utils: path.resolve(__dirname, 'client/redux'),
       dux: path.resolve(__dirname, 'client/redux/ducks'),
       fragments: path.resolve(__dirname, 'client/fragments'),
@@ -54,6 +55,11 @@ module.exports = {
         query: {
           presets: ['es2015', 'react', 'stage-2'],
         },
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
       },
       {
         test: /\.css$/,

@@ -1,0 +1,3 @@
+query TaskCreatorParentTaskQuery($input: TaskQueryInput!) {
+  task(input: $input) { id name }
+}

@@ -1,13 +1,11 @@
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import TaskList from 'components/task_list';
-
-export const TaskListQuery = gql`query TaskListQuery { tasks { id } }`;
+import TasksQuery from 'queries/task_list/tasks.graphql';
 
 // adds the 'tasks' prop 
 const withTasks = graphql(
-  TaskListQuery,
+  TasksQuery,
   {
     props: ({ data: { tasks } }) => ({ tasks })
   }

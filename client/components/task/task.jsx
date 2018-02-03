@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import _ from 'lodash';
 
-import TaskList from 'components/task_list';
 import styles from './task.css';
+
+let TaskList;
 
 export default class Task extends Component {
   static defaultProps = {
@@ -42,10 +44,11 @@ export default class Task extends Component {
           <button onClick={this.onClickRemove}>x</button>
         </div>
         <div className={styles.subtasks} >
-          <TaskList tasks={task.tasks || []}/>
+          { task.tasks ? <TaskList tasks={task.tasks} /> : null }
         </div>
       </div>
     );
   }
 }
 
+import ('components/task_list').then(_TaskList => { TaskList = _TaskList.default; });

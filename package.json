@@ -37,6 +37,7 @@
     "karma-webpack": "^2.0.9",
     "mocha": "^5.0.0",
     "nodemon": "^1.14.11",
+    "rosie": "^1.6.0",
     "sinon": "^4.2.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",

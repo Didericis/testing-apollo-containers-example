@@ -7,8 +7,8 @@ global.sandbox = sinon.sandbox.create();
 
 afterEach(() => sandbox.restore());
 
-//const factoryContexts = require.context('test_utils/factories', true);
-//factoryContexts.keys().forEach(factoryContexts);
+const factoryContexts = require.context('factories', true);
+factoryContexts.keys().forEach(factoryContexts);
 
 enzyme.configure({ adapter: new Adapter() });
 

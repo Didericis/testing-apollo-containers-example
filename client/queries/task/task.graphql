@@ -1,0 +1,5 @@
+#import "fragments/task.graphql"
+
+query TaskTaskQuery($input: TaskQueryInput!) {
+  task(input: $input) { id tasks { ...TaskFragment } }
+}

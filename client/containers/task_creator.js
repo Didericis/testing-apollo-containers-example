@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 
 import * as TaskActions from 'dux/tasks'; 
 import TaskCreator from 'components/task_creator';
-import { TaskListQuery } from 'containers/task_list';
-import { TaskQuery } from 'containers/task';
+import CreateTaskMutation from 'mutations/task_creator/create_task.graphql';
+import TaskQuery from 'queries/task/task.graphql';
+import TasksQuery from 'queries/task_list/tasks.graphql';
+import ParentTaskQuery from 'queries/task_creator/parent_task.graphql';
 
 // adds the 'clearParentTask' prop 
 const withOnClickClearParent = connect(
@@ -15,11 +17,6 @@ const withOnClickClearParent = connect(
     onClickClearParent: () => dispatch(TaskActions.clearParentId())
   }),
 );
-
-export const ParentTaskQuery = gql`
-query TaskCreatorQuery($input: TaskQueryInput!) {
-  task(input: $input) { id name }
-}`;
 
 // adds the 'parentTask' prop 
 const withParentTask = compose(
@@ -34,15 +31,9 @@ const withParentTask = compose(
       props: ({ data }) => ({ parentTask: data.task })
     }
   ),
+  // we don't want the parentId prop to get passed down
   mapProps(({ ...props, parentId }) => ({ ...props })),
 );
-
-export const CreateTaskMutation = gql`
-mutation CreateTaskMutation($input: CreateTaskMutationInput!) {
-  createTask(input: $input) {
-    task { id name parentId }
-  }
-}`;
 
 // adds the 'onClickCreate' prop 
 const withOnClickCreate = graphql(
@@ -50,7 +41,7 @@ const withOnClickCreate = graphql(
   {
     props: ({ mutate, ownProps: { parentTask } }) => ({
       onClickCreate: (task) => mutate({
-        refetchQueries: [{ query: TaskListQuery }].concat(parentTask ? [{ 
+        refetchQueries: [{ query: TasksQuery }].concat(parentTask ? [{ 
           query: TaskQuery, 
           variables: { input: { id: parentTask.id } }
         }] : []),
@@ -60,6 +51,7 @@ const withOnClickCreate = graphql(
   }
 );
 
+// hoc for our container (exported for testing)
 export const container = compose(
   withOnClickClearParent,
   withParentTask,

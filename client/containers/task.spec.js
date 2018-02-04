@@ -10,21 +10,18 @@ import * as TaskActions from 'dux/tasks';
 import TestProvider from 'test_provider';
 import { container } from 'containers/task';
 
-  //static waitUntilProps = (container, component, props) => waitUntil(() => (
-  // container.update().find(component).props().includes(props) 
-  //), 100, 10)
 const Component = () => null;
 const Container = container(Component);
 
 describe('<TaskContainer />', () => {
   def('storeState', {});
-  def('graphqlResolver', {});
+  def('graphqlMocks', {});
   def('inputTaskProp', () => ({ id: Faker.random.uuid() })); 
   def('inputProps', () => ({
     task: $inputTaskProp,
   }));
   def('container', () => mount(
-    <TestProvider storeState={$storeState} graphqlResolver={$graphqlResolver}>
+    <TestProvider storeState={$storeState} graphqlMocks={$graphqlMocks}>
       <Container {...$inputProps} />
     </TestProvider>
   ));
@@ -34,7 +31,7 @@ describe('<TaskContainer />', () => {
   context('when the task query will succeed', () => {
     def('resolvedTask', () => Factory.build('task', { id: $inputTaskProp.id }));
     def('taskQuery', () => sandbox.stub());
-    def('graphqlResolver', () => ({
+    def('graphqlMocks', () => ({
       Query: () => ({
         task: $taskQuery.returns($resolvedTask),
       })

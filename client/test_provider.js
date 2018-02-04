@@ -5,12 +5,13 @@ import { MemoryRouter } from 'react-router';
 import { SchemaLink } from 'apollo-link-schema';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import { store } from 'redux_utils';
+import PropTypes from 'prop-types';
 
 // NB: Import schema string instead of the schema executable so we don't 
 // end up importing server related code to the client
 import schemaString from 'raw-loader!../output/schema'; 
 import { createClient } from 'lib/apollo_client'
+import { store } from 'redux_utils';
 
 // Test schema
 export const schema = makeExecutableSchema({ typeDefs: schemaString });
@@ -31,15 +32,20 @@ export default class TestProvider extends Component {
     actionHistory: (state = [], action) => [action, ...state]
   });
 
+  static propTypes = {
+    storeState: PropTypes.object,
+    graphqlMocks: PropTypes.object,
+  }
+
   store = TestProvider.createStore();
 
   componentWillMount() {
-    const { graphqlResolver, storeState } = this.props;
+    const { graphqlMocks, storeState } = this.props;
     this.setStoreState(storeState);
-    this.mockGraphql(graphqlResolver);
+    this.mockGraphql(graphqlMocks);
   }
 
-  componentWillReceiveProps({ graphqlResolver, storeState }) {
+  componentWillReceiveProps({ graphqlMocks, storeState }) {
     this.setStoreState(storeState);
     this.mockGraphql(graphqlMocks);
   }

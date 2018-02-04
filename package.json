@@ -39,6 +39,7 @@
     "nodemon": "^1.14.11",
     "rosie": "^1.6.0",
     "sinon": "^4.2.0",
+    "wait-until-promise": "^1.0.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",
     "whatwg-fetch": "^2.0.3"
@@ -48,6 +49,7 @@
     "apollo-client": "^2.2.0",
     "apollo-link": "^1.0.7",
     "apollo-link-http": "^1.3.2",
+    "apollo-link-schema": "^1.0.2",
     "classnames": "^2.2.5",
     "config": "^1.29.2",
     "express": "^4.16.2",
@@ -57,10 +59,12 @@
     "graphql-tools": "^2.18.0",
     "hogan-express": "^0.5.2",
     "prop-types": "^15.6.0",
+    "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "webpack": "^3.10.0"

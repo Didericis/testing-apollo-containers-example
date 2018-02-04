@@ -12,7 +12,7 @@ import RemoveTaskMutation from 'mutations/task/remove_task.graphql';
 
 // adds the 'selected' prop
 const withSelected = connect(
-  ({ tasks: { parentId } }, { task }) => ({ selected: task.id === parentId }),
+  ({ tasks: { parentId } }, { task }) => ({ selected: task.id === parentId })
 );
 
 // adds the 'task' prop 
@@ -23,6 +23,7 @@ const withTask = graphql(
       variables: { input: { id }}, 
     }),
     props: ({ data, ownProps }) => ({ 
+      loading: data.loadin,
       task: {
         ...ownProps.task,
         ...data.task,

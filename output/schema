@@ -1,0 +1,41 @@
+input CreateTaskMutationInput {
+  task: TaskInput!
+}
+
+type CreateTaskMutationPayload {
+  task: Task
+}
+
+type Mutation {
+  createTask(input: CreateTaskMutationInput!): CreateTaskMutationPayload
+  removeTask(input: RemoveTaskMutationInput!): RemoveTaskMutationPayload
+}
+
+type Query {
+  task(input: TaskQueryInput!): Task
+  tasks: [Task]
+}
+
+input RemoveTaskMutationInput {
+  id: String
+}
+
+type RemoveTaskMutationPayload {
+  success: Boolean
+}
+
+type Task {
+  id: ID!
+  name: String!
+  parentId: String
+  tasks: [Task]
+}
+
+input TaskInput {
+  name: String!
+  parentId: String
+}
+
+input TaskQueryInput {
+  id: String
+}

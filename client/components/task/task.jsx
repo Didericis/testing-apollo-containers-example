@@ -6,6 +6,7 @@ import _ from 'lodash';
 import styles from './task.css';
 
 let TaskList;
+import ('components/task_list').then(_TaskList => { TaskList = _TaskList.default; });
 
 export default class Task extends Component {
   static defaultProps = {
@@ -49,6 +50,4 @@ export default class Task extends Component {
       </div>
     );
   }
-}
-
-import ('components/task_list').then(_TaskList => { TaskList = _TaskList.default; });
+} 

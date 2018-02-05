@@ -6,6 +6,7 @@ Factory
   .attrs({
     id: Faker.random.uuid,
     name: Faker.lorem.sentence,
+    parentId: null,
     tasks: null,
   })
 

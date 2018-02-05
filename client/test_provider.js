@@ -13,21 +13,9 @@ import schemaString from 'raw-loader!../output/schema';
 import { createClient } from 'lib/apollo_client'
 import { store } from 'redux_utils';
 
-// Test schema
-export const schema = makeExecutableSchema({ typeDefs: schemaString });
-
 // Default mocks
-addMockFunctionsToSchema({ 
-  schema,
-  mocks: {
-    ID: () => Faker.random.uuid(),
-    String: () => Faker.lorem.sentence(),
-  }
-});
-
 export default class TestProvider extends Component {
-  static schema = makeExecutableSchema({ typeDefs: schemaString });
-  static apolloClient = createClient({ link: new SchemaLink({ schema: TestProvider.schema }) });
+  static createSchema = () => makeExecutableSchema({ typeDefs: schemaString });
   static createStore = (initialStoreState = {}) => store(initialStoreState, {
     actionHistory: (state = [], action) => [action, ...state]
   });
@@ -37,7 +25,13 @@ export default class TestProvider extends Component {
     graphqlMocks: PropTypes.object,
   }
 
-  store = TestProvider.createStore();
+  constructor(props) {
+    super(props);
+    this.schema = TestProvider.createSchema();
+    this.store = TestProvider.createStore();
+    this.apolloClient = createClient({ link: new SchemaLink({ schema: this.schema }) });
+    this.addDefaultMocks();
+  }
 
   componentWillMount() {
     const { graphqlMocks, storeState } = this.props;
@@ -50,10 +44,20 @@ export default class TestProvider extends Component {
     this.mockGraphql(graphqlMocks);
   }
 
+  addDefaultMocks() {
+    addMockFunctionsToSchema({ 
+      schema: this.schema,
+      mocks: {
+        ID: () => Faker.random.uuid(),
+        String: () => Faker.lorem.sentence(),
+      }
+    });
+  }
+
   mockGraphql(mocks = {}) {
     addMockFunctionsToSchema({ 
-      schema: TestProvider.schema,
-      mocks 
+      schema: this.schema,
+      mocks,
     });
   }
 
@@ -79,7 +83,7 @@ export default class TestProvider extends Component {
     return (
       <MemoryRouter>
         <Provider store={this.store}>
-          <ApolloProvider client={TestProvider.apolloClient}>
+          <ApolloProvider client={this.apolloClient}>
             {children}
           </ApolloProvider>
         </Provider>

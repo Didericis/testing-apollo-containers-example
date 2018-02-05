@@ -42,10 +42,10 @@ const withOnClickRemove = compose(
     RemoveTaskMutation,
     { 
       props: ({ mutate, ownProps: { task, clearParentId } }) => ({ 
-        onClickRemove: ({ parentId }) => mutate({
+        onClickRemove: () => mutate({
           refetchQueries: [
             { query: TasksQuery },
-            { query: TaskQuery, variables: { input: { id: parentId } } }
+            { query: TaskQuery, variables: { input: { id: task.parentId } } }
           ],
           variables: { input: { id: task.id }}, 
         }).then(clearParentId)

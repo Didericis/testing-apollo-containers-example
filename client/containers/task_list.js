@@ -7,7 +7,10 @@ import TasksQuery from 'queries/task_list/tasks.graphql';
 const withTasks = graphql(
   TasksQuery,
   {
-    props: ({ data: { tasks } }) => ({ tasks })
+    props: ({ data: { loading, tasks } }) => ({ 
+      loading,
+      tasks 
+    })
   }
 );
 

@@ -39,6 +39,7 @@ describe('<TaskContainer />', () => {
     beforeEach(() => waitUntil(() => !$getProps().loading, 100, 10));
 
     it('adds the subtasks to the tasks prop', () => {
+      expect($taskQuery.called).to.be.true;
       expect($getProps().task).to.include(_.pick($resolvedTask, ['id', 'tasks'])); 
     });
   });
@@ -73,6 +74,24 @@ describe('<TaskContainer />', () => {
 
       it('dispatches the the setParentId action', () => {
         expect($testProvider.getLastAction()).to.eql(TaskActions.setParentId($onClickArg.id));
+      });
+    });
+  });
+
+  context('when the removeTask mutation will succeed', () => {
+    def('removeTaskMutation', () => sandbox.stub());
+    def('mutationResult', () => ({ success: true }));
+    def('graphqlMocks', () => ({
+      Mutation: () => ({
+        removeTask: $removeTaskMutation.returns($mutationResult),
+      })
+    }));
+
+    context('and the onClickRemove prop is called', () => {
+      beforeEach(() => $getProps().onClickRemove());
+
+      it('calls the createTask mutation with the task prop id', () => {
+        expect($removeTaskMutation.args[0][1].input.id).to.eql($inputTaskProp.id);
       });
     });
   });

@@ -2,8 +2,8 @@
 node_modules
 **/node_modules
 .DS_Store
-web/public/js
-web/public/css
-!web/public/css/font-awesome.min.css
-web/coverage
+public/js
+public/css
+!public/css/font-awesome.min.css
+coverage
 npm-debug.log

@@ -10,11 +10,11 @@ import TaskQuery from 'queries/task/task.graphql';
 import TasksQuery from 'queries/task_list/tasks.graphql';
 import ParentTaskQuery from 'queries/task_creator/parent_task.graphql';
 
-// adds the 'clearParentTask' prop 
+// adds the 'onClickClearParentTask' prop 
 const withOnClickClearParent = connect(
   null,
   (dispatch) => ({
-    onClickClearParent: () => dispatch(TaskActions.clearParentId())
+    onClickClearParent: () => dispatch(TaskActions.clearParentId()),
   }),
 );
 
@@ -32,7 +32,10 @@ const withParentTask = compose(
     }
   ),
   // we don't want the parentId prop to get passed down
-  mapProps(({ ...props, parentId }) => ({ ...props })),
+  mapProps(({ ...props, parentTask, parentId }) => ({ 
+    ...props,
+    parentTask: parentId ? parentTask : undefined,
+  })),
 );
 
 // adds the 'onClickCreate' prop 
